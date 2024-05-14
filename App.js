@@ -2,6 +2,21 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Modal} from 'react-native';
 import React, {useState} from 'react';
 import {Login} from '../telacadastro/src/components/Login';
+import { initializeApp } from "firebase/app";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDWBH39O4OFWBcFOf7QM4vD-sP5fuP9H_g",
+  authDomain: "sensorcheck-96479.firebaseapp.com",
+  projectId: "sensorcheck-96479",
+  storageBucket: "sensorcheck-96479.appspot.com",
+  messagingSenderId: "287029654916",
+  appId: "1:287029654916:web:edd1b7042145f3465a59d1"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
 
 export default function App() {
 
@@ -11,12 +26,23 @@ export default function App() {
   const [loginVisible, setLoginVisible] = useState(false);
 
   const cadastro = () => {
-    //alert(senha);
-    //alert(email);
-    //alert(nome);
-    
-    //fazer chamada no back-End para cadastro
+    createUserWithEmailAndPassword(auth, email, senha)
+    .then((userCredential) => {
+      //signed in
+      const user = userCredential.user;
+
+      console.log(user);
+      setUser(user);
+    })
+    .catch((error) => {
+      const errorCode = errorCode;
+      const errorMessage = errorMessage;
+
+      console.log(errorMessage);
+    })
   }
+  
+  
 
 
   return (
@@ -49,6 +75,8 @@ export default function App() {
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

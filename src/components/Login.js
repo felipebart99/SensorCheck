@@ -1,16 +1,24 @@
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Modal} from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Modal } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { Home } from '../components/Home.js';
+import { auth } from '../../App.js';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+//mudou
 
 export function Login({ handleClose, email, senha }) {
   const [inputEmail, setEmail] = useState(email);
   const [inputSenha, setSenha] = useState(senha);
   const [homeVisible, setHomeVisible] = useState(false);
 
-  const handleOpen = () => {
-    setHomeVisible(true);
-  }
+  const entrar = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, inputEmail, inputSenha);
+      setHomeVisible(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -24,13 +32,13 @@ export function Login({ handleClose, email, senha }) {
         <TouchableOpacity style={styles.button} onPress={handleClose}>
           <Text style={styles.buttonText}>Voltar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.buttonEntrar]} onPress={handleOpen}>
+        <TouchableOpacity style={[styles.button, styles.buttonEntrar]} onPress={entrar}>
           <Text>Entrar</Text>
         </TouchableOpacity>
       </View>
 
       <Modal visible={homeVisible}>
-        <Home/>
+        <Home />
       </Modal>
     </View>
   );
