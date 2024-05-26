@@ -20,12 +20,12 @@ export function Home() {
       .then(response => response.json())
       .then(data => {
         console.log('Dados recebidos:', data);
-        //setSensorData({
-          //sala: data.salaDeEstar[0] ? { temp: data.salaDeEstar[0].temperatura, ur: data.salaDeEstar[0].umidade } : { temp: null, ur: null },
-          //quarto: data.quarto[0] ? { temp: data.quarto[0].temperatura, ur: data.quarto[0].umidade } : { temp: null, ur: null },
-         // cozinha: data.cozinha[0] ? { temp: data.cozinha[0].temperatura, ur: data.cozinha[0].umidade } : { temp: null, ur: null },
-          //banheiro: data.banheiro[0] ? { temp: data.banheiro[0].temperatura, ur: data.banheiro[0].umidade } : { temp: null, ur: null },
-       // });
+        setSensorData({
+          sala: data.salaDeEstar[0] ? { temp: data.salaDeEstar[0].temperatura, ur: data.salaDeEstar[0].umidade } : { temp: null, ur: null },
+          quarto: data.quarto[0] ? { temp: data.quarto[0].temperatura, ur: data.quarto[0].umidade } : { temp: null, ur: null },
+          cozinha: data.cozinha[0] ? { temp: data.cozinha[0].temperatura, ur: data.cozinha[0].umidade } : { temp: null, ur: null },
+          banheiro: data.banheiro[0] ? { temp: data.banheiro[0].temperatura, ur: data.banheiro[0].umidade } : { temp: null, ur: null },
+        });
       })
       .catch(error => {
         console.error('Erro ao buscar dados:', error);
@@ -40,7 +40,7 @@ export function Home() {
       maxUR: parseFloat(maxUR),
     };
 
-    fetch('http://localhost:3000/config', {
+    fetch('http://192.168.1.7:3000/config', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 20,
-    gap: 70,
+    gap: 50,
   },
   itemText: {
     fontSize: 25,
