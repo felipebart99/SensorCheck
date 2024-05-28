@@ -49,12 +49,12 @@ app.get('/dados', async (req, res) => {
   console.log('Recebida requisição para /dados');
   try {
     const results = await Promise.all([
-      pool.query('SELECT * FROM Usuarios ORDER BY data_e_hora DESC LIMIT 1'),
-      pool.query('SELECT * FROM SalaDeEstar ORDER BY data_e_hora DESC LIMIT 1'),
-      pool.query('SELECT * FROM Quarto ORDER BY data_e_hora DESC LIMIT 1'),
-      pool.query('SELECT * FROM Cozinha ORDER BY data_e_hora DESC LIMIT 1'),
-      pool.query('SELECT * FROM Banheiro ORDER BY data_e_hora DESC LIMIT 1'),
-      pool.query('SELECT * FROM Escritorio ORDER BY data_e_hora DESC LIMIT 1')
+      pool.query('SELECT nome, email, senha FROM Usuarios ORDER BY id DESC LIMIT 1 '),
+      pool.query('SELECT temperatura, umidade FROM SalaDeEstar ORDER BY id DESC LIMIT 1'),
+      pool.query('SELECT temperatura, umidade FROM Quarto ORDER BY id DESC LIMIT 1'),
+      pool.query('SELECT temperatura, umidade FROM cozinha ORDER BY id DESC LIMIT 1'),
+      pool.query('SELECT temperatura, umidade FROM banheiro ORDER BY id DESC LIMIT 1'),
+      pool.query('SELECT temperatura, umidade FROM escritorio ORDER BY id DESC LIMIT 1')
     ]);
 
     const data = {
@@ -72,7 +72,6 @@ app.get('/dados', async (req, res) => {
     res.status(500).json({ error: 'Erro ao buscar dados' });
   }
 });
-
 
 // Rota para inserir/atualizar dados
 app.post('/config', async (req, res) => {
